@@ -19,7 +19,8 @@ router.post('/sendmessage/:phone', async (req,res) => {
     console.log(phone);
 
     console.log(message);
-    
+    console.log(req.body);
+
     
 
     if (phone == undefined || message == undefined) {
