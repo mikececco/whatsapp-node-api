@@ -10,9 +10,7 @@ const { Client, LocalAuth } = require("whatsapp-web.js");
 
 process.title = "whatsapp-node-api";
 global.client = new Client({
-  authStrategy: new LocalAuth({
-    dataPath: path.join('/tmp', '.wwebjs_auth'),
-}),
+  authStrategy: new LocalAuth(),
   puppeteer: { headless: true },
 });
 
