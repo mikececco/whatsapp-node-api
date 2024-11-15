@@ -13,17 +13,7 @@ global.client = new Client({
   authStrategy: new LocalAuth({
     dataPath: path.join('/tmp', '.wwebjs_auth'),
 }),
-  puppeteer: { headless: true, 
-    args: [
-      '--no-sandbox',
-      '--disable-setuid-sandbox',
-      '--disable-dev-shm-usage',
-      '--disable-gpu',
-      '--no-first-run',
-      '--no-zygote',
-      '--single-process'
-  ]
-   },
+  puppeteer: { headless: true },
 });
 
 global.authed = false;
