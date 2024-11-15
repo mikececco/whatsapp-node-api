@@ -3,14 +3,27 @@ const bodyParser = require("body-parser");
 const fs = require("fs");
 const axios = require("axios");
 const shelljs = require("shelljs");
+const path = require('path');
 
 const config = require("./config.json");
 const { Client, LocalAuth } = require("whatsapp-web.js");
 
 process.title = "whatsapp-node-api";
 global.client = new Client({
-  authStrategy: new LocalAuth(),
-  puppeteer: { headless: true },
+  authStrategy: new LocalAuth({
+    dataPath: path.join('/tmp', '.wwebjs_auth'),
+}),
+  puppeteer: { headless: true, 
+    args: [
+      '--no-sandbox',
+      '--disable-setuid-sandbox',
+      '--disable-dev-shm-usage',
+      '--disable-gpu',
+      '--no-first-run',
+      '--no-zygote',
+      '--single-process'
+  ]
+   },
 });
 
 global.authed = false;
@@ -54,8 +67,21 @@ client.on("message", async (msg) => {
       msg.attachmentData = attachmentData;
     }
     axios.post(config.webhook.path, { msg });
+    
   }
+
+  // Check if the received message is "!ping"
+  if (msg.body === '!ping') {
+    // If true, send the reply "pong" to the sender
+    console.log(msg.from);
+    
+    client.sendMessage(msg.from, 'pong');
+
+  }
+
+  console.log('RECEIVED MESSAGEEE');
 });
+
 client.on("disconnected", () => {
   console.log("disconnected");
 });
