@@ -1,7 +1,7 @@
 {
     "port":5000,
     "webhook":{
-        "enabled":true,
+        "enabled":false,
         "path":"https://hook.eu2.make.com/fv8fmtmsk8ksgo7nupeo5my9rjxbg9le"
     }
 }

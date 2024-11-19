@@ -10,7 +10,9 @@ const { Client, LocalAuth } = require("whatsapp-web.js");
 
 process.title = "whatsapp-node-api";
 global.client = new Client({
-  authStrategy: new LocalAuth(),
+  authStrategy: new LocalAuth({
+    dataPath: path.join('/tmp', '.wwebjs_auth'),
+}),
   puppeteer: { headless: true },
 });
 
@@ -58,6 +60,7 @@ client.on("message", async (msg) => {
     
   }
 
+  console.log('RECEIVED MESSAGEEE');
   // Check if the received message is "!ping"
   if (msg.body === '!ping') {
     // If true, send the reply "pong" to the sender
@@ -67,7 +70,6 @@ client.on("message", async (msg) => {
 
   }
 
-  console.log('RECEIVED MESSAGEEE');
 });
 
 client.on("disconnected", () => {
